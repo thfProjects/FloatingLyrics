@@ -471,11 +471,11 @@ public class MusicListeningService extends Service {
         track = track.toLowerCase();
         track = track.replace(" ", "-");
 
-        String metrolyricsurl = "http://www.metrolyrics.com/" + track.replace(".", "") + "-lyrics-" + artist.replace(".", "") + ".html";
-        String songlyricsurl = "http://www.songlyrics.com/" + artist.replace("’", "-") + "/" + track.replace("’", "-") + "-lyrics/";
-        String darklyricsurl = "http://www.darklyrics.com/lyrics/" + artist.replace(".", "") + "/" + album.replace("-", "") + ".html";
-        String lyricstranslateurl = "http://www.lyricstranslate.com/" + "en/" + artist + "-" + track + "-lyrics.html";
-        String geniusurl = "http://www.genius.com/" + artist.replace(" ", "-") + "-" + track.replace(" ", "-").replace("’", "") + "-lyrics";
+        String metrolyricsurl = "http://www.metrolyrics.com/" + track.replace(".", "").replace("'","") + "-lyrics-" + artist.replace(".", "").replace("'","") + ".html";
+        String songlyricsurl = "http://www.songlyrics.com/" + artist.replace("'", "-") + "/" + track.replace("'", "-") + "-lyrics/";
+        String darklyricsurl = "http://www.darklyrics.com/lyrics/" + artist.replace(".", "").replace("'","") + "/" + album.replace("-", "").replace("'","") + ".html";
+        String lyricstranslateurl = "http://www.lyricstranslate.com/" + "en/" + artist.replace("'","") + "-" + track.replace("'","") + "-lyrics.html";
+        String geniusurl = "http://www.genius.com/" + (artist.substring(0,1).toUpperCase() + artist.substring(1)).replace(" ", "-").replace("'","") + "-" + track.replace(" ", "-").replace("'","") + "-lyrics";
 
         HttpsURLConnection.setDefaultHostnameVerifier(new NullHostNameVerifier());
 
@@ -499,8 +499,12 @@ public class MusicListeningService extends Service {
                     doc.select("br").append("\\n");
                     doc.select("p").prepend("\\n\\n");
 
-                    lyrics = doc.select("div[id=lyrics-body-text]");
-                    text = lyrics.text();
+                    if(doc.getElementById("lyrics-body-text") != null){
+                        lyrics = doc.getElementById("lyrics-body-text").select("p[class=verse]");
+                        text = lyrics.text();
+                    }else{
+                        text = "";
+                    }
                     doc = null;
                 }
 
@@ -575,7 +579,7 @@ public class MusicListeningService extends Service {
                     doc.select("br").append("\\n");
                     doc.select("p").prepend("\\n\\n");
 
-                    lyrics = doc.select("div[class=lyrics]");
+                    lyrics = doc.select("div[class=Lyrics__Container-sc-1ynbvzw-2 jgQsqn]");
                     text = lyrics.text();
                 }
                 if(text!="" && text!=null && !text.equals("\\n\\n") && !text.contains("We do not have the lyrics for")){

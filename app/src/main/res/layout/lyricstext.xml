@@ -8,6 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="#f01e1e1e"
+        android:gravity="center_vertical"
+        android:padding="10dp"
         android:text="Artist - Song"
         android:id="@+id/albumname" />
 
@@ -27,10 +29,10 @@
         </ListView>
 
         <ImageButton
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="30dp"
+            android:layout_height="20dp"
             android:layout_gravity="bottom|left"
-            android:background="#00000000"
+            android:background="@drawable/scale_button"
             android:id="@+id/scalebutton"/>
 
     </FrameLayout>
